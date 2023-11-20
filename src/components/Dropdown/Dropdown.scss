@@ -1,0 +1,64 @@
+.dropdown {
+    position: relative;
+    .dropdown-btn {
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #415364;
+        border-radius: 2px;
+        color: #415364;
+        font-size: 14px;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        min-width: 100px;
+        justify-content: space-between;
+    }
+    .dropdown-options {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        font-size: 14px;
+        color: rgb(50, 62, 77);
+        letter-spacing: -0.21px;
+        border-radius: 4px;
+        box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
+        outline: transparent;
+        overflow-y: auto;
+        background-color: rgb(255, 255, 255);
+        animation-name: animation1, animation2;
+        animation-duration: 0.367s;
+        animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
+        animation-fill-mode: both;
+        z-index: 300;
+        width: 100%;
+        white-space: nowrap;
+        
+        li {
+            cursor: pointer;
+            padding: 8px;
+            &:hover {
+                background-color: rgb(242, 243, 244) ;
+            }
+            &.active {
+                background-color: rgb(232, 233, 234)
+            }
+        }
+
+    }
+}
+
+
+@keyframes animation1 {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes animation2 {
+    0% {
+        transform: translate3d(0px, -10px, 0px);
+        pointer-events: none;
+    }
+}

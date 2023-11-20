@@ -1,0 +1,24 @@
+.attendace-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    border-top: 4px solid;
+    border-color:#9ba5a1;
+    border-radius: 0 0 4px 4px;
+    .attendace-card-number {
+        text-align: center;
+        width: 119px;
+        color: #27313C;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .attendace-card-title {
+        color: #27313C;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+        width: 119px;
+    }
+}

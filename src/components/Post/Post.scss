@@ -1,0 +1,111 @@
+.post {
+    padding: 17px;
+    border-bottom: 1px solid #E6E7E8;
+    &:last-child {
+        border-bottom: 0;
+    }
+    .post-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        svg {
+            height: 16px;
+            path {
+                fill: #27313C;
+            }
+        }
+        .info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            height: 24px;
+            position: relative;
+            .user-info {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                height: 100%;
+                .cover-avatar {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    height: 100%;
+                    &::before {
+                        content: "";
+                        width: 4px;
+                        height: 100%;
+                        background-color: #1984D8;
+                        border-radius: 3px;
+                    }
+                }
+                .name {
+                    letter-spacing: 0px;
+                    color: #27313C;
+                    font-size: 13px;
+                    font-weight: 600;
+                }
+            }
+            .time {
+                font-size: 12px;
+                font-style: italic;
+                letter-spacing: 0px;
+                color: #868F96;
+            }
+            &.female {
+                .cover-avatar::before {
+                    content: "";
+                    background-color: #F7A800;
+                }
+            }
+        }
+    }
+    .cover-content {
+        padding-left: 8px;
+        margin: 16px 0;
+        .post-content {
+            overflow: hidden;
+            line-height: 1.25em;
+            font-size: 13px;
+            
+            a {
+                color: #1984D8;
+                text-decoration: none;
+            }
+        }
+        .show-more {
+            margin-top: 8px;
+            color: #1984D8;
+            cursor: pointer;
+            font-size: 13px; 
+            width: fit-content;   
+        }
+    }
+    .action-post {
+        display: flex;
+        align-items: center;
+        margin-top: 24px;
+        gap: 32px;
+        padding: 0 8px;
+        .button-block {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            button {
+                svg {
+                    width: 15px;
+                    path {
+                        fill: #27313C;
+                    }
+                }
+                background-color: transparent;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            span {
+                font-size: 14px;
+                color: #27313C;
+            }
+        }
+    }
+}
