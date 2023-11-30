@@ -100,7 +100,7 @@ const PostPage = () => {
         <div className="sort">
           <span>Sort by:</span>
           <Dropdown
-            styles={{
+            style={{
               border: "0",
               backgroundColor: "transparent",
               color: "#415364",

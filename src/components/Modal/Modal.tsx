@@ -6,11 +6,13 @@ import { ReactNode } from "react";
 export type ModalProps = React.HTMLAttributes<HTMLDivElement> & {
   showModal: Boolean;
   children: ReactNode;
+  title?: string;
   onClose?: () => void;
 };
 export default function Modal({
   showModal,
   children,
+  title,
   onClose,
   ...props
 }: ModalProps) {
@@ -28,9 +30,12 @@ export default function Modal({
             }}
           >
             <div className="modal-portal" {...props}>
-              <button className="cancel-btn" onClick={onClose}>
-                <XMark />
-              </button>
+              <div className="header">
+                <p>{title}</p>
+                <button className="cancel-btn" onClick={onClose}>
+                  <XMark />
+                </button>
+              </div>
               {children}
             </div>
           </div>,

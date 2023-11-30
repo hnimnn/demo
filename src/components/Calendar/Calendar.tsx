@@ -221,7 +221,11 @@ function Calendar({ events }: { events: EventType[] }) {
           </React.Fragment>
         ))}
       </div>
-      <Modal showModal={showed} onClose={() => setShowed(false)}>
+      <Modal
+        title="Add Event"
+        showModal={showed}
+        onClose={() => setShowed(false)}
+      >
         <CreateUpdateEvent />
       </Modal>
     </div>

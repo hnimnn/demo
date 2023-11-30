@@ -1,25 +1,20 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  ReactElement,
-  StyleHTMLAttributes,
-} from "react";
+import React, { useState, useEffect, useRef, ReactElement } from "react";
 import "./Dropdown.scss";
 import { ReactComponent as DropdownIcon } from "../../assets/icons/caret-down-solid.svg";
 
-interface DropdownProps {
+export type DropdownProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   options: string[];
   icon?: ReactElement;
   styles?: React.CSSProperties;
   onOptionSelect: (option: string) => void;
-}
+};
 
 const Dropdown: React.FC<DropdownProps> = ({
   options,
   onOptionSelect,
   icon,
   styles,
+  ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(
@@ -52,8 +47,8 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div ref={dropdownRef} className="dropdown">
       <button
-        style={styles || {}}
-        className="dropdown-btn"
+        {...props}
+        className={`${props.className} dropdown-btn`}
         onClick={() => setIsOpen(!isOpen)}
       >
         {icon}
