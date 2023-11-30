@@ -1,8 +1,9 @@
 import React from "react";
 import AttendanceCard from "../../components/AttendanceCard/AttendanceCard";
 import Calendar from "../../components/Calendar/Calendar";
-import { events } from "../../utils/data";
+import { useSelector } from "react-redux";
 import "./StudentCalendar.scss";
+import { selectAllEvent } from "../../redux/reducers/eventSlice";
 const StudentCalendar = () => {
   const [handledData, setHandledData] = React.useState({
     presentNumber: 0,
@@ -10,6 +11,7 @@ const StudentCalendar = () => {
     lateNumber: 0,
     leaveNumber: 0,
   });
+  const events = useSelector(selectAllEvent);
   React.useLayoutEffect(() => {
     const dataNumber = events.reduce(
       (accumulator, event) => {

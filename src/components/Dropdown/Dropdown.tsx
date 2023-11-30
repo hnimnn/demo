@@ -2,10 +2,14 @@ import React, { useState, useEffect, useRef, ReactElement } from "react";
 import "./Dropdown.scss";
 import { ReactComponent as DropdownIcon } from "../../assets/icons/caret-down-solid.svg";
 
+export type stylesType = {
+  listStyle: React.CSSProperties;
+};
 export type DropdownProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   options: string[];
   icon?: ReactElement;
-  styles?: React.CSSProperties;
+  styles?: stylesType;
+  defaultOption?: string;
   onOptionSelect: (option: string) => void;
 };
 
@@ -14,11 +18,12 @@ const Dropdown: React.FC<DropdownProps> = ({
   onOptionSelect,
   icon,
   styles,
+  defaultOption,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(
-    options[0]
+    defaultOption || options[0]
   );
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -56,7 +61,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         <DropdownIcon width={9} />
       </button>
       {isOpen && (
-        <ul className="dropdown-options">
+        <ul className="dropdown-options" style={styles?.listStyle}>
           {options.map((option) => (
             <li
               key={option}

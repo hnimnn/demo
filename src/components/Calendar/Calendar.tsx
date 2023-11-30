@@ -32,7 +32,10 @@ function Calendar({ events }: { events: EventType[] }) {
   const [handledEvents, setHandledEvents] = React.useState(events);
   const options = ["Day", "Week", "Month"];
   const [selectedOption, setSelectedOption] = React.useState(options[0]);
-  const [showed, setShowed] = React.useState(false);
+  const [showed, setShowed] = React.useState({
+    show: false,
+    data: { date: "", time: 0 },
+  });
   React.useLayoutEffect(() => {
     setHandledEvents(handleEvents(events));
   }, [events]);
@@ -107,6 +110,8 @@ function Calendar({ events }: { events: EventType[] }) {
               </CardHover>
             </div>
           );
+        } else {
+          return "";
         }
       });
     },
@@ -192,7 +197,7 @@ function Calendar({ events }: { events: EventType[] }) {
               <div
                 onClick={(e) => {
                   if (e.target !== e.currentTarget) return;
-                  setShowed(true);
+                  setShowed({ data: { time: hour, date: i.date }, show: true });
                 }}
                 key={index}
                 className="block"
@@ -223,10 +228,13 @@ function Calendar({ events }: { events: EventType[] }) {
       </div>
       <Modal
         title="Add Event"
-        showModal={showed}
-        onClose={() => setShowed(false)}
+        showModal={showed.show}
+        onClose={() => setShowed({ ...showed, show: false })}
       >
-        <CreateUpdateEvent />
+        <CreateUpdateEvent
+          data={showed.data}
+          setShowed={(value) => setShowed({ ...showed, show: value })}
+        />
       </Modal>
     </div>
   );
