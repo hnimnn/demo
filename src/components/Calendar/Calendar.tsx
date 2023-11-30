@@ -5,7 +5,6 @@ import {
   convertDate,
   displayRangeTime,
   convertRangeDates,
-  eventsIntersect,
   getDate,
   getWeekNumber,
   handleEvents,
@@ -23,6 +22,8 @@ import { ReactComponent as CalendarIcon } from "../../assets/icons/calendar-alt-
 
 import Dropdown from "../Dropdown/Dropdown";
 import CardHover from "../CardHover/CardHover";
+import Modal from "../Modal/Modal";
+import CreateUpdateEvent from "../CreateUpdateEvent/CreateUpdateEvent";
 
 function Calendar({ events }: { events: EventType[] }) {
   const [actived, setActived] = React.useState(() => convertDate(new Date()));
@@ -31,7 +32,7 @@ function Calendar({ events }: { events: EventType[] }) {
   const [handledEvents, setHandledEvents] = React.useState(events);
   const options = ["Day", "Week", "Month"];
   const [selectedOption, setSelectedOption] = React.useState(options[0]);
-
+  const [showed, setShowed] = React.useState(false);
   React.useLayoutEffect(() => {
     setHandledEvents(handleEvents(events));
   }, [events]);
@@ -189,6 +190,10 @@ function Calendar({ events }: { events: EventType[] }) {
             </div>
             {initialDates(currentWeek).map((i, index) => (
               <div
+                onClick={(e) => {
+                  if (e.target !== e.currentTarget) return;
+                  setShowed(true);
+                }}
                 key={index}
                 className="block"
                 data-date={hour + " " + i.date}
@@ -216,6 +221,9 @@ function Calendar({ events }: { events: EventType[] }) {
           </React.Fragment>
         ))}
       </div>
+      <Modal showModal={showed} onClose={() => setShowed(false)}>
+        <CreateUpdateEvent />
+      </Modal>
     </div>
   );
 }

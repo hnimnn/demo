@@ -1,0 +1,33 @@
+.modal-portal-cover{
+    position: fixed;
+    top:0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(40, 40, 40, 0.584);
+    z-index: 100000;
+    .modal-portal{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #fff;
+        min-width: 200px;
+        min-height: 200px;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        padding: 24px;
+        .cancel-btn{
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: transparent;
+            svg {
+                path {
+                    fill: rgb(196, 196, 196);
+                }
+            }
+        }
+    }
+}
