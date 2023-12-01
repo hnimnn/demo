@@ -111,7 +111,8 @@ export const eventsIntersect = (events: EventType[]) => {
 
 }
 export const groupOverlappingEvents = (events: EventType[]): EventType[][] => {
-    events.sort((a, b) => {
+    const sortedEvent = [...events]
+    sortedEvent.sort((a, b) => {
         const dateComparison = a.start.date.localeCompare(b.start.date);
 
         if (dateComparison !== 0) {
@@ -134,8 +135,8 @@ export const groupOverlappingEvents = (events: EventType[]): EventType[][] => {
     const groupedEvents: EventType[][] = [];
     let currentGroup: EventType[] = [];
 
-    for (let i = 0; i < events.length; i++) {
-        const event = events[i];
+    for (let i = 0; i < sortedEvent.length; i++) {
+        const event = sortedEvent[i];
 
         // Kiểm tra xem sự kiện hiện tại có giao nhau với các sự kiện trong nhóm không
         const intersects = currentGroup.some(existingEvent =>

@@ -2,9 +2,12 @@ import React from "react";
 import AttendanceCard from "../../components/AttendanceCard/AttendanceCard";
 import Calendar from "../../components/Calendar/Calendar";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addEvent } from "../../redux/reducers/eventSlice";
 import "./StudentCalendar.scss";
 import { selectAllEvent } from "../../redux/reducers/eventSlice";
 const StudentCalendar = () => {
+  const dispatch = useDispatch();
   const [handledData, setHandledData] = React.useState({
     presentNumber: 0,
     absentNumber: 0,
@@ -42,6 +45,9 @@ const StudentCalendar = () => {
     );
     setHandledData(dataNumber);
   }, []);
+  const handleSubmit = (data: any) => {
+    dispatch(addEvent(data));
+  };
   return (
     <div className="student-calendar">
       <div className="page-title">Student calendar</div>
@@ -84,7 +90,7 @@ const StudentCalendar = () => {
         </div>
       </div>
       <div className="calendar-section">
-        <Calendar events={events} />
+        <Calendar onSubmit={handleSubmit} events={events} />
       </div>
     </div>
   );

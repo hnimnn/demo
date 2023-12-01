@@ -4,13 +4,12 @@ import { ReactComponent as Pen } from "../../assets/icons/pen-solid.svg";
 import { ReactComponent as Calendar } from "../../assets/icons/calendar-solid.svg";
 import "./CreateUpdateEvent.scss";
 import Dropdown from "../Dropdown/Dropdown";
-import { allHours } from "../../utils/data";
-import { useDispatch } from "react-redux";
-import { addEvent } from "../../redux/reducers/eventSlice";
+import { EventType, allHours } from "../../utils/data";
 
 export type CreateUpdateEventType = {
   setShowed: (s: boolean) => void;
   data: dataNow;
+  onSubmit?: (data: EventType) => void;
 };
 export type dataNow = {
   time: number;
@@ -19,8 +18,8 @@ export type dataNow = {
 export default function CreateUpdateEvent({
   setShowed,
   data,
+  onSubmit,
 }: CreateUpdateEventType) {
-  const dispatch = useDispatch();
   const options = ["Course", "Exam", "Appointment"];
   const optionsHour = Array.from(Array(24).keys()).map(
     (hour) => allHours[hour]
@@ -36,12 +35,12 @@ export default function CreateUpdateEvent({
   });
   const handleOnSave = () => {
     console.log(formValue);
-    dispatch(
-      addEvent({
+    if (onSubmit)
+      onSubmit({
         id: 20,
         type: formValue.type,
         content: formValue.content,
-        attendance: "leave",
+        attendance: formValue.type === "Course" ? "leave" : undefined,
         start: {
           time: formValue.start.time,
           date: formValue.start.date,
@@ -50,8 +49,7 @@ export default function CreateUpdateEvent({
           time: formValue.end.time,
           date: formValue.end.date,
         },
-      })
-    );
+      });
     setShowed(false);
   };
   return (

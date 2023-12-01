@@ -25,7 +25,12 @@ import CardHover from "../CardHover/CardHover";
 import Modal from "../Modal/Modal";
 import CreateUpdateEvent from "../CreateUpdateEvent/CreateUpdateEvent";
 
-function Calendar({ events }: { events: EventType[] }) {
+export type CalendarType = {
+  events: EventType[];
+  onSubmit?: (data: EventType) => void;
+  OnDelete?: (id: number) => void;
+};
+function Calendar({ events, onSubmit, OnDelete }: CalendarType) {
   const [actived, setActived] = React.useState(() => convertDate(new Date()));
   const [currentWeek, setCurrentWeek] = React.useState(0);
   const inputDateRef = React.useRef<HTMLInputElement>(null);
@@ -232,6 +237,7 @@ function Calendar({ events }: { events: EventType[] }) {
         onClose={() => setShowed({ ...showed, show: false })}
       >
         <CreateUpdateEvent
+          onSubmit={onSubmit}
           data={showed.data}
           setShowed={(value) => setShowed({ ...showed, show: value })}
         />
