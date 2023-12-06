@@ -10,14 +10,16 @@ function App() {
         <Routes>
           <Route
             element={
-              <ul>
-                <Link to="/calendar">
-                  <li>Calendar</li>
-                </Link>
-                <Link to="/post">
-                  <li>Post</li>
-                </Link>
-              </ul>
+              <>
+                <ul>
+                  <Link to="/calendar">
+                    <li>Calendar</li>
+                  </Link>
+                  <Link to="/post">
+                    <li>Post</li>
+                  </Link>
+                </ul>
+              </>
             }
             path="/"
           />

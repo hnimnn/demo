@@ -266,7 +266,11 @@ export function doesEventOverlapWithRightColumn(event: EventType, rightColumn: E
 
 }
 
+export const isTimeValid = (startTime: number, startDate: string, endTime: number, endDate: string) => {
 
+    if (startDate === endDate) return startTime < endTime
+    else if (startDate > endDate) return false; else return true
+}
 //------------Post---------------
 export const formatTimePost = (date: Date): string => {
 

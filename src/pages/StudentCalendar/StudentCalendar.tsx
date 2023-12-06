@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addEvent } from "../../redux/reducers/eventSlice";
 import "./StudentCalendar.scss";
 import { selectAllEvent } from "../../redux/reducers/eventSlice";
+import { EventType } from "../../utils/data";
 const StudentCalendar = () => {
   const dispatch = useDispatch();
   const [handledData, setHandledData] = React.useState({
@@ -45,7 +46,7 @@ const StudentCalendar = () => {
     );
     setHandledData(dataNumber);
   }, []);
-  const handleSubmit = (data: any) => {
+  const handleSubmit = (data: EventType) => {
     dispatch(addEvent(data));
   };
   return (
