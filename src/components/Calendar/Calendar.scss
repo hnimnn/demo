@@ -266,6 +266,27 @@
                         color: #27313C;
                         overflow-wrap: break-word;
                     }
+                    .bottom-btn {
+                        display: flex;
+                        gap: 8px;
+                        justify-content: flex-end;
+                        margin-top: 16px;
+                        .button {
+                            background-color: transparent;
+                            padding: 2px 0;
+                            border-radius: 4px;
+                            font-weight: 600;
+                            width: 50px;
+                            &.edit-btn {
+                                border: 1px solid #5e6b86;
+                            }
+                            &.delete-btn {
+                                border: 1px solid rgb(227, 87, 87);
+                                background-color: rgb(221, 111, 111);
+                                color: #fff;
+                            }
+                        }
+                    }
                     .time-event {
                         font-size: 12px;
                         color: #a6a6a6;

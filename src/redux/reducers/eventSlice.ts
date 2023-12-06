@@ -13,12 +13,16 @@ const eventSlice = createSlice({
         addEvent: (state: EventType[], action: PayloadAction<EventType>) => {
             state.push(action.payload)
         },
+        updateEvent: (state: EventType[], action: PayloadAction<EventType>) => {
+            const index = state.findIndex(e => e.id === action.payload.id);
+            state[index] = action.payload;
+        }
 
     }
 })
 
 
-export const { addEvent } = eventSlice.actions
+export const { addEvent, updateEvent } = eventSlice.actions
 
 
 

@@ -11,8 +11,13 @@ import ButtonCheckbox from "../ButtonCheckbox/ButtonCheckbox";
 
 export type CreateUpdateEventType = {
   setShowed: (s: boolean) => void;
-  data: dataNow;
-  onSubmit?: (data: EventType) => void;
+  data?: dataNow;
+  onSubmit?: (data: DataSubmitType) => void;
+  event?: EventType | null;
+};
+export type DataSubmitType = {
+  status: "create" | "update";
+  data: EventType;
 };
 export type dataNow = {
   time: number;
@@ -22,21 +27,27 @@ export type dataNow = {
 export default function CreateUpdateEvent({
   setShowed,
   data,
+  event,
   onSubmit,
 }: CreateUpdateEventType) {
   const options = ["Course", "Exam", "Appointment"];
   const optionsHour = Array.from(Array(24).keys()).map(
     (hour) => allHours[hour]
   );
+
   const [formValue, setFormValue] = useState({
-    content: "",
-    type: options[0] as "Course" | "Exam" | "Appointment",
-    attendance: "leave" as "present" | "absent" | "late" | "leave",
+    content: event?.content || "",
+    type: event?.type || (options[0] as "Course" | "Exam" | "Appointment"),
+    attendance:
+      event?.attendance || ("leave" as "present" | "absent" | "late" | "leave"),
     start: {
-      time: data.time,
-      date: data.date,
+      time: event?.start?.time || data?.time || 0,
+      date: event?.start?.date || data?.date || "",
     },
-    end: { time: data.time + 1, date: data.date },
+    end: {
+      time: event?.end?.time || (data?.time || 0) + 1 || 0,
+      date: event?.end?.date || data?.date || "",
+    },
   });
   const [error, setError] = React.useState({
     content: false,
@@ -52,22 +63,27 @@ export default function CreateUpdateEvent({
     if (error.content || error.time || error.type) return;
     if (onSubmit)
       onSubmit({
-        id: 20,
-        type: formValue.type,
-        content: formValue.content,
-        attendance: formValue.type === "Course" ? "leave" : undefined,
-        start: {
-          time: formValue.start.time,
-          date: formValue.start.date,
-        },
-        end: {
-          time: formValue.end.time,
-          date: formValue.end.date,
+        status: event ? "update" : "create",
+        data: {
+          id: event?.id || Math.random(),
+          type: formValue.type,
+          content: formValue.content,
+          attendance:
+            formValue.type === "Course"
+              ? formValue.attendance || "leave"
+              : undefined,
+          start: {
+            time: formValue.start.time || 0,
+            date: formValue.start.date || "",
+          },
+          end: {
+            time: formValue.end.time,
+            date: formValue.end.date || "",
+          },
         },
       });
     setShowed(false);
   };
-  console.log(error);
   return (
     <div className="create-update-form">
       <p className="title-form">Add new event</p>
@@ -77,6 +93,7 @@ export default function CreateUpdateEvent({
           <input
             placeholder="Enter event content"
             className="input"
+            value={formValue.content}
             onChange={(e) => {
               if (e.target.value !== "") setError({ ...error, content: false });
               else setError({ ...error, content: true });
@@ -235,6 +252,7 @@ export default function CreateUpdateEvent({
         <div className="input-form type-input">
           <Calendar />
           <Dropdown
+            defaultOption={formValue.type}
             className="input"
             style={{ width: "100%" }}
             onOptionSelect={(value) =>
@@ -255,11 +273,12 @@ export default function CreateUpdateEvent({
           <div className="input-form attendance-input">
             <Attendance />
             <ButtonCheckbox
-              disabled={true}
+              defaultOption={formValue.attendance}
+              disabled={!event}
               onChange={(value) => {
                 setFormValue({
                   ...formValue,
-                  content: value as "present" | "absent" | "late" | "leave",
+                  attendance: value as "present" | "absent" | "late" | "leave",
                 });
               }}
               options={[

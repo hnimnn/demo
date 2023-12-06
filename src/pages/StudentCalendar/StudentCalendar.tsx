@@ -3,10 +3,11 @@ import AttendanceCard from "../../components/AttendanceCard/AttendanceCard";
 import Calendar from "../../components/Calendar/Calendar";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { addEvent } from "../../redux/reducers/eventSlice";
+import { addEvent, updateEvent } from "../../redux/reducers/eventSlice";
 import "./StudentCalendar.scss";
 import { selectAllEvent } from "../../redux/reducers/eventSlice";
 import { EventType } from "../../utils/data";
+import { DataSubmitType } from "../../components/CreateUpdateEvent/CreateUpdateEvent";
 const StudentCalendar = () => {
   const dispatch = useDispatch();
   const [handledData, setHandledData] = React.useState({
@@ -46,8 +47,9 @@ const StudentCalendar = () => {
     );
     setHandledData(dataNumber);
   }, []);
-  const handleSubmit = (data: EventType) => {
-    dispatch(addEvent(data));
+  const handleSubmit = (data: DataSubmitType) => {
+    if (data.status === "create") dispatch(addEvent(data.data));
+    else dispatch(updateEvent(data.data));
   };
   return (
     <div className="student-calendar">

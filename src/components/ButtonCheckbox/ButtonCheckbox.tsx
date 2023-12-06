@@ -9,6 +9,7 @@ export type ButtonCheckboxProps = {
   onChange?: (value: string | number) => void;
   styles?: StylesType;
   disabled?: boolean;
+  defaultOption?: string;
 };
 export type StylesType = {
   block: React.CSSProperties;
@@ -20,9 +21,14 @@ export default function ButtonCheckbox({
   options,
   onChange,
   styles,
+  defaultOption,
   disabled,
 }: ButtonCheckboxProps) {
-  const [active, setActive] = React.useState(0);
+  const [active, setActive] = React.useState(
+    options.findIndex((option) => {
+      return defaultOption === option.value;
+    })
+  );
   const [positionActiveTab, setPositionActiveTab] = React.useState({
     left: NaN,
     right: NaN,

@@ -23,11 +23,13 @@ import { ReactComponent as CalendarIcon } from "../../assets/icons/calendar-alt-
 import Dropdown from "../Dropdown/Dropdown";
 import CardHover from "../CardHover/CardHover";
 import Modal from "../Modal/Modal";
-import CreateUpdateEvent from "../CreateUpdateEvent/CreateUpdateEvent";
+import CreateUpdateEvent, {
+  DataSubmitType,
+} from "../CreateUpdateEvent/CreateUpdateEvent";
 
 export type CalendarType = {
   events: EventType[];
-  onSubmit?: (data: EventType) => void;
+  onSubmit?: (data: DataSubmitType) => void;
   OnDelete?: (id: number) => void;
 };
 function Calendar({ events, onSubmit, OnDelete }: CalendarType) {
@@ -40,6 +42,7 @@ function Calendar({ events, onSubmit, OnDelete }: CalendarType) {
   const [showed, setShowed] = React.useState({
     show: false,
     data: { date: "", time: 0 },
+    event: null as EventType | null,
   });
   React.useLayoutEffect(() => {
     setHandledEvents(handleEvents(events));
@@ -96,6 +99,21 @@ function Calendar({ events, onSubmit, OnDelete }: CalendarType) {
                     </div>
                     <p>{e.content}</p>
                     <span className="time-event">{displayRangeTime(e.id)}</span>
+                    <div className="bottom-btn">
+                      <button
+                        className="edit-btn button"
+                        onClick={() => {
+                          setShowed({
+                            event: e,
+                            data: { time: NaN, date: "" },
+                            show: true,
+                          });
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button className="delete-btn button">Delete</button>
+                    </div>
                   </div>
                 }
               >
@@ -120,6 +138,7 @@ function Calendar({ events, onSubmit, OnDelete }: CalendarType) {
         }
       });
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentWeek]
   );
 
@@ -202,7 +221,11 @@ function Calendar({ events, onSubmit, OnDelete }: CalendarType) {
               <div
                 onClick={(e) => {
                   if (e.target !== e.currentTarget) return;
-                  setShowed({ data: { time: hour, date: i.date }, show: true });
+                  setShowed({
+                    event: null,
+                    data: { time: hour, date: i.date },
+                    show: true,
+                  });
                 }}
                 key={index}
                 className="block"
@@ -237,6 +260,7 @@ function Calendar({ events, onSubmit, OnDelete }: CalendarType) {
         onClose={() => setShowed({ ...showed, show: false })}
       >
         <CreateUpdateEvent
+          event={showed.event}
           onSubmit={onSubmit}
           data={showed.data}
           setShowed={(value) => setShowed({ ...showed, show: value })}
