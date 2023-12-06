@@ -3,7 +3,11 @@ import AttendanceCard from "../../components/AttendanceCard/AttendanceCard";
 import Calendar from "../../components/Calendar/Calendar";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { addEvent, updateEvent } from "../../redux/reducers/eventSlice";
+import {
+  addEvent,
+  deleteEvent,
+  updateEvent,
+} from "../../redux/reducers/eventSlice";
 import "./StudentCalendar.scss";
 import { selectAllEvent } from "../../redux/reducers/eventSlice";
 import { EventType } from "../../utils/data";
@@ -51,6 +55,9 @@ const StudentCalendar = () => {
     if (data.status === "create") dispatch(addEvent(data.data));
     else dispatch(updateEvent(data.data));
   };
+  const handleDelete = (id: number) => {
+    dispatch(deleteEvent(id));
+  };
   return (
     <div className="student-calendar">
       <div className="page-title">Student calendar</div>
@@ -93,7 +100,11 @@ const StudentCalendar = () => {
         </div>
       </div>
       <div className="calendar-section">
-        <Calendar onSubmit={handleSubmit} events={events} />
+        <Calendar
+          OnDelete={handleDelete}
+          onSubmit={handleSubmit}
+          events={events}
+        />
       </div>
     </div>
   );

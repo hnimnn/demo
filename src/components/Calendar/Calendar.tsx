@@ -112,7 +112,14 @@ function Calendar({ events, onSubmit, OnDelete }: CalendarType) {
                       >
                         Edit
                       </button>
-                      <button className="delete-btn button">Delete</button>
+                      <button
+                        onClick={() => {
+                          if (OnDelete) OnDelete(e.id);
+                        }}
+                        className="delete-btn button"
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
                 }
