@@ -12,6 +12,7 @@ import ButtonCheckbox from "../ButtonCheckbox/ButtonCheckbox";
 export type CreateUpdateEventType = {
   setShowed: (s: boolean) => void;
   data?: dataNow;
+  showed?: boolean;
   onSubmit?: (data: DataSubmitType) => void;
   event?: EventType | null;
 };
@@ -23,9 +24,23 @@ export type dataNow = {
   time: number;
   date: string;
 };
+export type FormValue = {
+  content: string;
+  type: "Course" | "Exam" | "Appointment";
+  attendance: "present" | "absent" | "late" | "leave";
+  start: {
+    time: number;
+    date: string;
+  };
+  end: {
+    time: number;
+    date: string;
+  };
+};
 
 export default function CreateUpdateEvent({
   setShowed,
+  showed,
   data,
   event,
   onSubmit,
@@ -35,7 +50,7 @@ export default function CreateUpdateEvent({
     (hour) => allHours[hour]
   );
 
-  const [formValue, setFormValue] = useState({
+  const [formValue, setFormValue] = useState<FormValue>({
     content: event?.content || "",
     type: event?.type || (options[0] as "Course" | "Exam" | "Appointment"),
     attendance:
@@ -84,6 +99,7 @@ export default function CreateUpdateEvent({
       });
     setShowed(false);
   };
+
   return (
     <div className="create-update-form">
       <p className="title-form">Add new event</p>

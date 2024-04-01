@@ -270,6 +270,7 @@ function Calendar({ events, onSubmit, OnDelete }: CalendarType) {
           event={showed.event}
           onSubmit={onSubmit}
           data={showed.data}
+          showed={showed.show}
           setShowed={(value) => setShowed({ ...showed, show: value })}
         />
       </Modal>
